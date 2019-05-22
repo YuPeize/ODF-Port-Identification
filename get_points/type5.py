@@ -53,9 +53,9 @@ def getpoint(image):
                 distance4=dis
                 P4=p
     bias=image.shape[0]*0.03
+    P1[0][0]=P1[0][0]-bias
+    P3[0][0]=P3[0][0]-bias
     if vis==True:
-        P1[0][0]=P1[0][0]-bias
-        P3[0][0]=P3[0][0]-bias
         cv2.circle(image,tuple(P1[0]),5,(0,0,155),-1)
         cv2.circle(image,tuple(P2[0]),5,(0,0,155),-1)
         cv2.circle(image,tuple(P3[0]),5,(0,0,155),-1)
