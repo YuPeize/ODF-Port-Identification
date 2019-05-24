@@ -49,7 +49,7 @@ def drawPoints(event, x, y, flags, param):
     """
     if event == cv2.EVENT_LBUTTONDOWN and len(points_hand) < 4:
         cv2.circle(img_hand_copy, (x, y), 5, (0, 0, 255), 1)
-        cv2.imshow("points", img_hand_copy)
+        cv2.imshow("origin", img_hand_copy)
         cv2.waitKey(0)
         points_hand.append(np.array([x, y]))
         print(points_hand)
@@ -75,11 +75,12 @@ def predictOdfType(image, method="input"):
 
     return odf_type
 
-def calculateNum(image, method="input"):
+def calculateNum(image,odf_type, method="input"):
     """
     # 计算机架的行数和列数
     :param image: 扶正后的图片
     :param method: 计算方法
+    :param odf_type: 机架类型
     :return: 机架的行数与列数
     """
     # 固定值
@@ -89,7 +90,7 @@ def calculateNum(image, method="input"):
 
     # 调用segment.py计算
     elif method == "segment":
-        col, row = segment.Segmentation(image)
+        col, row = segment.Segmentation(image,odf_type)
 
     # 人工输入
     elif method == "input":
@@ -264,8 +265,8 @@ if __name__ == '__main__':
         image_change = transform(img, points)
 
         # 得到机架的行列信息
-        # y_num, x_num = calculateNum(image_change, "segment")
-        y_num, x_num = calculateNum(image_change, "input")
+        y_num, x_num = calculateNum(image_change,odf_type, "segment")
+        # y_num, x_num = calculateNum(image_change, "input")
         print("row:", y_num)
         print("col:", x_num)
         
