@@ -145,11 +145,13 @@ def Segmentation(img,odf_type):
         else:
             y_num += round((high - sum(y_list) - y_length) / divisor)
         # print(y_num)
-        if(abs(x_num-28)<3):
-            x_num = 28
-        if(abs(y_num-12)<3):
-            y_num = 12
-        return x_num, y_num
+        if(abs(x_num-12)<3 ):
+            x_num = 12
+        if(abs(y_num-28)<3):
+            y_num = 28
+        if (abs(y_num - 24) < 2):
+            y_num = 24
+        return x_num, y_num   #  x_num为列数, y_num为行数
         # cv2.waitKey()
     elif odf_type=="5":
         high, width = img.shape[:2]
