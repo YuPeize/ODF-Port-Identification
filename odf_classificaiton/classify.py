@@ -54,7 +54,7 @@ def odfclassify(testImg):
     result=classify0(testMat,trainMats,labels,1)
     #print("预测机架类型：",result)
     return result
-if __name__ == '__main__':
-    testImg=cv2.imread('odf_test/type2_1.jpg')
-    testImg=cv2.resize(testImg,(500,700))
-    odfclassify(testImg)
+# if __name__ == '__main__':
+#     testImg=cv2.imread('odf_test/type2_1.jpg')
+#     testImg = cv2.resize(testImg,(500,700))
+#     odfclassify(testImg)
