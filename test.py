@@ -96,7 +96,6 @@ def calculateNum(image,odf_type, method="input"):
     elif method == "input":
         row = int(input("请输入行数："))
         col = int(input("请输入列数："))
-
     return row, col
 
 def getPoints(image, odf_type, method="hand"):

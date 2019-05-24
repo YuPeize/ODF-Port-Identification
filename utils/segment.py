@@ -19,13 +19,25 @@ def Segmentation(img,odf_type):
         :param odf_type:机架类型
         :return: (x_num,y_num)
         """
-    if odf_type=="4" or odf_type=="2" or odf_type=="6":
+    if odf_type=="4" or odf_type=="2" or odf_type=="6" or odf_type=="1":
         high, width = img.shape[:2]
         # img=cv2.resize(img,(width,high))
+        ROIYUV = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
+        ROIYUV[:, :, 0] = cv2.equalizeHist(ROIYUV[:, :, 0])
+        img = cv2.cvtColor(ROIYUV, cv2.COLOR_YUV2BGR)
+
         image_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         red_low = np.array([156, 43, 46])
         red_high = np.array([180, 255, 255])
-        mask = cv2.inRange(image_hsv, red_low, red_high)
+        mask_1 = cv2.inRange(image_hsv, red_low, red_high)
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 3))
+        mask_1 = cv2.morphologyEx(mask_1, cv2.MORPH_OPEN, kernel)
+        red_low = np.array([0, 43, 46])
+        red_high = np.array([7, 255, 255])
+        mask_2 = cv2.inRange(image_hsv, red_low, red_high)
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 3))
+        mask_2 = cv2.morphologyEx(mask_2, cv2.MORPH_OPEN, kernel)
+        mask = cv2.bitwise_or(mask_1, mask_2)
         # cv2.imshow("we", mask)
         image, contours, h = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         max_area = 0
